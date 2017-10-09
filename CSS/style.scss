@@ -1,0 +1,147 @@
+// FONTS
+$font-stack: Helvetica, sans-serif;
+
+// COLORS
+$white: white;
+$background: #1E1B1B;
+$btn-primary: #26C09A;
+$btn-danger: #CE5A5A;
+$btn-color: #4A4F52;
+$btn-operation: #444141;
+
+// OTHER VARIABLES
+$display-margins: 0 .5rem;
+$rigth-align: right;
+
+// GENERAL
+*, *::before, *::after{
+	box-sizing: border-box;
+}
+
+body {
+	font: 150% $font-stack;
+  	background-color: $background;
+  	color: $white;
+}	
+
+// CALCULATOR STYLES
+.calculator {
+	width: 40rem;
+	max-width: 100%;
+	margin: 3rem auto;
+	padding: 2.5rem;
+
+	.display {
+		height: 5rem;
+		line-height: 5rem;
+		margin: $display-margins;
+		text-align: $rigth-align;
+		font-size: 2.5rem;
+		color: rgba($white, .90);
+	}
+
+	.history {
+		height: 2rem;
+		margin: $display-margins;
+		margin-bottom: 30px;
+		font-size: 1.2rem;
+		text-align: $rigth-align;
+		color: rgba($white, .50);
+		border-bottom: 1px solid rgba($white, .15);
+	}
+
+	.keys {
+		display: flex;
+		flex-wrap: wrap;
+
+		.btn {
+			margin: 0;
+			padding: 0;
+			height: 5rem;
+			line-height: 4rem;
+			text-align: center;
+			font-size: 1.5rem;
+			border: none;
+			background: transparent;
+			outline: none;
+			&:hover {
+			    span {
+			        background: lighten($btn-color, 10%);
+			    }
+			}
+
+			span {
+				display: block;
+				margin: 0.5rem;
+				color: $white;
+				background-color: $btn-color;
+				border-radius: 2px;
+				transition: background-color .4s;
+			}
+			
+			&.danger {
+				&:hover {
+				    span {
+				        background: lighten($btn-danger, 10%);
+				    }
+				}
+				span {
+					background: $btn-danger;
+				}
+			}
+		}
+
+		.first-panel {
+			width: 75%;
+
+			.top-buttons {
+				.btn {
+					width: 33.3%;
+					margin-right: -5.8px;
+					padding: 0;
+				}
+			}
+
+			.numbers {
+				display: flex;
+				flex-wrap: wrap;
+				flex-direction: row-reverse;
+				align-items: flex-end;
+				align-content: flex-end;
+				.btn {
+					width: 33.3%;
+					&:nth-child(10) {
+						width: 100%;
+					}
+				}
+			}
+		}
+
+		.second-panel {
+			width: 25%;
+			display: flex;
+			flex-direction: column;
+			.btn {
+				width: 100%;
+				&:hover {
+				    span {
+				        background: lighten($btn-operation, 10%);
+				    }
+				}
+				span {
+					background: $btn-operation;
+				}
+				&.primary {
+					&:hover {
+					    span {
+					        background: lighten($btn-primary, 10%);
+					    }
+					}
+					span {
+						background: $btn-primary;
+					}
+				}
+			}
+		}
+	}
+}
