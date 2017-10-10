@@ -6,7 +6,9 @@ var calculator = new Vue({
 		total: 0,
 		display: 0,
 		history: '',
-		operator: null
+		operator: null,
+		expres: '',
+		curOperation: []
 	},
 
 	methods: {
@@ -20,6 +22,22 @@ var calculator = new Vue({
 				this.display = this.y;
 				//come back to this
 			}
+		},
+
+		immediateCalc: function() {
+			this.curOperation.push(this.operator);
+			console.log(this.curOperation);
+
+			if (this.x !== '' && this.y !== '') {
+				this.expres = this.x + this.curOperation[0] + this.y;
+				console.log(this.expres);
+				this.expres = eval(this.expres);
+				this.display = this.expres;
+				this.x = this.expres;
+				this.y = '';
+				this.curOperation.shift();
+			} 
+			
 		},
 
 		calculate: function() {
@@ -38,17 +56,25 @@ var calculator = new Vue({
 					break;
 			}
 			this.display = this.total;
-			this.x = '' + this.total + ''; 
+			this.x = this.total; 
 			this.y = '';
-			this.operator = null;
+			this.history = this.x;
 		},
 
-		clear: function() {
-
+		clearCur: function() {
+				this.history = this.history.substring(0, this.history.length - this.y.length);
+				this.y = '';
+				this.display = 0;
 		},
 
 		clearAll: function() {
-
+			this.x = '';
+			this.y = '';
+			this.display = 0;
+			this.history = '';
+			this.operator = null;
+			this.expres = '';
+			this.curOperation.length = 0;
 		}
 	}
 
