@@ -9,7 +9,9 @@ var calculator = new Vue({
         operator: null,
         expres: '',
         curOperation: [],
-        lastChar: this.history[this.history.length - 1]
+        operators: ['+', '-', '*', '/'],
+        lastChar: this.history[this.history.length - 1],
+        newHistory: ''
     },
 
     methods: {
@@ -17,28 +19,48 @@ var calculator = new Vue({
             if (this.operator === null) {
                 this.x += n;
                 this.display = this.x;
-                //come back to this
+
             } else {
                 this.y += n;
                 this.display = this.y;
-                //come back to this
+
             }
         },
 
         immediateCalc: function() {
-        	// replace last operator with new operator if 2 operators are clicked one after the other
-        	/*
-        	if (this.history.charAt(this.history.length - 1) === '*') {
-        		if (this.y === '') {
-        			this.history = this.history.slice(0, -1);
-        			this.history += this.operator;
+            // replace last operator with new operator if 2 operators are clicked one after the other
+            // Only add operator if input is not empty and there is no operator at the last
+            if (this.history != '' && this.operators.indexOf(this.lastChar) == -1) {
+                this.history += this.operator;
+                this.curOperation.push(this.operator);
+            }
 
-        		}
-        	}
-			*/
-        	this.curOperation.push(this.operator);
-        	console.log(this.curOperation);
+            // Allow minus if the string is empty
+            else if (this.history == '' && this.operator == '-') {
+                this.history += this.operator;
+            } 
+
+            // Replace the last operator (if exists) with the newly pressed operator
+            else if (this.operators.indexOf(this.lastChar) != -1) {
+
+            	this.history = this.history.substring(0, this.history.length - 1);
+
+            }
+
+
+            /*
+            for (var i = 0; i < this.history.length; i++) {
+            	if (this.history.charAt(i) === this.operator) {
+            		if (this.history.charAt(i + 1) === this.operator) {
+            			this.history = this.history.substr(0, this.history.charAt(i) - 1);
+            		}
+            	}
+
+            	
+            } */
+
             
+            console.log(this.curOperation);
 
             if (this.x !== '' && this.y !== '') {
                 this.expres = this.x + this.curOperation[0] + this.y;
@@ -53,7 +75,7 @@ var calculator = new Vue({
         },
 
         calculate: function() {
-        	// Calculate only if both x and y are defined
+            // Calculate only if both x and y are defined
             if (this.y !== '') {
                 switch (this.operator) {
                     case '+':
